@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QueueLess | Manage Clinics</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="{% static 'css/admin_dashboard.css' %}">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+
+    <h2>
+        <i class="bi bi-hospital"></i>
+        QueueLess
+    </h2>
+
+    <p class="admin-label">ADMIN PANEL</p>
+
+    <a href="{% url 'admin_dashboard' %}">
+        <i class="bi bi-speedometer2"></i>
+        Dashboard
+    </a>
+
+    <a href="{% url 'clinic_admin_list' %}" class="active">
+        <i class="bi bi-hospital"></i>
+        Clinics
+    </a>
+
+    <a href="{% url 'doctor_admin_list' %}">
+        <i class="bi bi-person-badge"></i>
+        Doctors
+    </a>
+
+    <a href="{% url 'patient_admin_list' %}">
+        <i class="bi bi-people"></i>
+        Patients
+    </a>
+
+    <a href="{% url 'booking_admin_list' %}">
+        <i class="bi bi-calendar-check"></i>
+        Bookings
+    </a>
+
+    <a href="{% url 'logout' %}" class="logout">
+        <i class="bi bi-box-arrow-right"></i>
+        Logout
+    </a>
+
+</div>
+
+
+<!-- Main Content -->
+<div class="main-content">
+
+    <header>
+
+        <div>
+            <h1>
+                <i class="bi bi-hospital"></i>
+                Clinic Management
+            </h1>
+
+            <p>Manage all registered clinics.</p>
+        </div>
+
+    </header>
+
+
+    <!-- Messages -->
+    {% if messages %}
+
+        <div class="clinic-messages">
+
+            {% for message in messages %}
+
+                <p class="clinic-message">
+                    <i class="bi bi-check-circle-fill"></i>
+                    {{ message }}
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- Add Clinic -->
+    <div class="clinic-add-section">
+
+        <a href="{% url 'clinic_create' %}" class="add-button">
+            <i class="bi bi-plus-circle"></i>
+            Add New Clinic
+        </a>
+
+    </div>
+
+
+    <!-- Clinic Table -->
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Clinic Name</th>
+                    <th>Contact</th>
+                    <th>Opening Time</th>
+                    <th>Closing Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for clinic in clinics %}
+
+                <tr>
+
+                    <!-- Clinic Name -->
+                    <td>
+                        <i class="bi bi-hospital"></i>
+                        {{ clinic.clinic_name }}
+                    </td>
+
+
+                    <!-- Contact -->
+                    <td>
+                        <i class="bi bi-telephone"></i>
+                        {{ clinic.contact_number }}
+                    </td>
+
+
+                    <!-- Opening Time -->
+                    <td>
+                        <i class="bi bi-clock"></i>
+                        {{ clinic.opening_time|time:"h:i A" }}
+                    </td>
+
+
+                    <!-- Closing Time -->
+                    <td>
+                        <i class="bi bi-clock-history"></i>
+                        {{ clinic.closing_time|time:"h:i A" }}
+                    </td>
+
+
+                    <!-- Clinic Status -->
+                    <td>
+
+                        {% if clinic.is_active %}
+
+                            <span class="clinic-status status-active">
+                                <i class="bi bi-check-circle-fill"></i>
+                                Active
+                            </span>
+
+                        {% else %}
+
+                            <span class="clinic-status status-inactive">
+                                <i class="bi bi-x-circle-fill"></i>
+                                Inactive
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- Actions -->
+                    <td>
+
+                        <div class="clinic-actions">
+
+                            <!-- Edit Clinic -->
+                            <a href="{% url 'clinic_update' clinic.id %}"
+                               class="edit-button">
+
+                                <i class="bi bi-pencil-square"></i>
+                                Edit
+
+                            </a>
+
+
+                            <!-- Activate / Deactivate -->
+                            <form method="POST"
+                                  action="{% url 'clinic_toggle_status' clinic.id %}">
+
+                                {% csrf_token %}
+
+                                {% if clinic.is_active %}
+
+                                    <button type="submit"
+                                            class="cancel-button">
+
+                                        <i class="bi bi-toggle-on"></i>
+                                        Deactivate
+
+                                    </button>
+
+                                {% else %}
+
+                                    <button type="submit"
+                                            class="add-button">
+
+                                        <i class="bi bi-toggle-off"></i>
+                                        Activate
+
+                                    </button>
+
+                                {% endif %}
+
+                            </form>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="6" class="empty-message">
+                        <i class="bi bi-info-circle"></i>
+                        No clinics found.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

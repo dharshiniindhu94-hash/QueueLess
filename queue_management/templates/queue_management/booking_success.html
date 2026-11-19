@@ -1,0 +1,79 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Booking Successful | QueueLess{% endblock %}
+
+{% block content %}
+
+<section class="success-section">
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            <i class="bi bi-check-lg"></i>
+        </div>
+
+        <h1>Booking Successful!</h1>
+
+        <p class="success-subtitle">
+            Your clinic token has been booked successfully.
+        </p>
+
+        <div class="success-token-box">
+            <span>Your Token Number</span>
+            <h2>#{{ booking.token_number }}</h2>
+            <p>
+                <i class="bi bi-ticket-perforated"></i>
+                Keep your token number safe
+            </p>
+        </div>
+
+        <div class="booking-details">
+
+            <h2>
+                <i class="bi bi-receipt"></i>
+                Booking Details
+            </h2>
+
+            <div class="detail-row">
+                <span><i class="bi bi-person"></i> Patient</span>
+                <strong>{{ booking.patient.first_name }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span><i class="bi bi-hospital"></i> Clinic</span>
+                <strong>{{ booking.clinic.clinic_name }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span><i class="bi bi-person-badge"></i> Doctor</span>
+                <strong>
+                    Dr. {{ booking.doctor.user.first_name }}
+                    {{ booking.doctor.user.last_name }}
+                </strong>
+            </div>
+
+            <div class="detail-row">
+                <span><i class="bi bi-calendar-event"></i> Booking Date</span>
+                <strong>{{ booking.booking_date }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span><i class="bi bi-info-circle"></i> Status</span>
+                <strong class="status-badge">
+                    {{ booking.get_status_display }}
+                </strong>
+            </div>
+
+        </div>
+
+        <a href="{% url 'clinic_list' %}" class="btn success-btn">
+            <i class="bi bi-hospital"></i>
+            Back to Clinics
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

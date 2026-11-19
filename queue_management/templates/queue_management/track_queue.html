@@ -1,0 +1,120 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Track My Queue | QueueLess{% endblock %}
+
+{% block content %}
+
+<section class="track-queue-section">
+
+    <div class="track-queue-header">
+        <span class="track-page-tag">
+            <i class="bi bi-activity"></i> LIVE QUEUE STATUS
+        </span>
+
+        <h1>Track Your Queue</h1>
+        <p>Stay updated on your appointment and queue position.</p>
+    </div>
+
+    <div class="track-queue-card">
+
+        <div class="track-icon">
+            <i class="bi bi-hospital"></i>
+        </div>
+
+        <h2>Your Booking Details</h2>
+        <p class="track-card-subtitle">
+            Here is the latest information about your appointment.
+        </p>
+
+        <div class="track-token-box">
+            <span><i class="bi bi-ticket-perforated"></i> YOUR TOKEN NUMBER</span>
+            <h1>{{ booking.token_number }}</h1>
+        </div>
+
+        <div class="track-details">
+
+            <div class="track-detail-row">
+                <span><i class="bi bi-hospital"></i> Clinic</span>
+                <strong>{{ booking.clinic.clinic_name }}</strong>
+            </div>
+
+            <div class="track-detail-row">
+                <span><i class="bi bi-person-badge"></i> Doctor</span>
+                <strong>
+                    Dr. {{ booking.doctor.user.first_name }}
+                    {{ booking.doctor.user.last_name }}
+                </strong>
+            </div>
+
+            <div class="track-detail-row">
+                <span><i class="bi bi-calendar3"></i> Booking Date</span>
+                <strong>{{ booking.booking_date }}</strong>
+            </div>
+
+            <div class="track-detail-row">
+                <span><i class="bi bi-people"></i> Current Token</span>
+                <strong>{{ current_token }}</strong>
+            </div>
+
+            <div class="track-detail-row">
+                <span><i class="bi bi-person-lines-fill"></i> Patients Ahead</span>
+                <strong>{{ patients_ahead }}</strong>
+            </div>
+
+            <div class="track-detail-row">
+                <span><i class="bi bi-info-circle"></i> Your Status</span>
+                <strong class="track-status">
+                    {{ booking.get_status_display }}
+                </strong>
+            </div>
+
+        </div>
+
+        {% if booking.status == 'WAITING' %}
+            <p class="queue-message waiting-message">
+                <i class="bi bi-clock"></i>
+                Your token is waiting. Please wait for your turn.
+            </p>
+
+        {% elif booking.status == 'CALLED' %}
+            <p class="queue-message called-message">
+                <i class="bi bi-bell"></i>
+                Your token has been called. Please proceed to the doctor.
+            </p>
+
+        {% elif booking.status == 'IN_PROGRESS' %}
+            <p class="queue-message progress-message">
+                <i class="bi bi-clipboard2-pulse"></i>
+                Your consultation is currently in progress.
+            </p>
+
+        {% elif booking.status == 'COMPLETED' %}
+            <p class="queue-message completed-message">
+                <i class="bi bi-check-circle"></i>
+                Your consultation has been completed.
+            </p>
+
+        {% elif booking.status == 'CANCELLED' %}
+            <p class="queue-message cancelled-message">
+                <i class="bi bi-x-circle"></i>
+                This booking has been cancelled.
+            </p>
+
+        {% elif booking.status == 'SKIPPED' %}
+            <p class="queue-message skipped-message">
+                <i class="bi bi-skip-forward-circle"></i>
+                Your token has been skipped.
+            </p>
+        {% endif %}
+
+        <a href="{% url 'my_bookings' %}" class="track-back-btn">
+            <i class="bi bi-arrow-left"></i>
+            Back to My Bookings
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

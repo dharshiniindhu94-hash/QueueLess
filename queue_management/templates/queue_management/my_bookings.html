@@ -1,0 +1,147 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}My Bookings | QueueLess{% endblock %}
+
+{% block content %}
+
+<section class="my-bookings-section">
+
+    <div class="my-bookings-header">
+
+        <span class="my-bookings-tag">
+            <i class="bi bi-calendar-check"></i> APPOINTMENT HISTORY
+        </span>
+
+        <h1>
+            <i class="bi bi-ticket-perforated"></i>
+            My Bookings
+        </h1>
+
+        <p>View and manage your clinic token bookings.</p>
+
+    </div>
+
+    <div class="my-bookings-container">
+
+        {% for booking in bookings %}
+
+            <div class="my-booking-card">
+
+                <div class="booking-card-header">
+
+                    <h2>
+                        <i class="bi bi-ticket-detailed"></i>
+                        Token #{{ booking.token_number }}
+                    </h2>
+
+                    <span class="booking-status
+                        {% if booking.status == 'WAITING' %}
+                            status-waiting
+                        {% elif booking.status == 'CALLED' %}
+                            status-called
+                        {% elif booking.status == 'IN_PROGRESS' %}
+                            status-progress
+                        {% elif booking.status == 'COMPLETED' %}
+                            status-completed
+                        {% elif booking.status == 'CANCELLED' %}
+                            status-cancelled
+                        {% else %}
+                            status-skipped
+                        {% endif %}
+                    ">
+                        {{ booking.get_status_display }}
+                    </span>
+
+                </div>
+
+                <div class="my-booking-details">
+
+                    <div class="my-detail-row">
+                        <span><i class="bi bi-hospital"></i> Clinic</span>
+                        <strong>{{ booking.clinic.clinic_name }}</strong>
+                    </div>
+
+                    <div class="my-detail-row">
+                        <span><i class="bi bi-person-badge"></i> Doctor</span>
+                        <strong>
+                            Dr. {{ booking.doctor.user.first_name }}
+                            {{ booking.doctor.user.last_name }}
+                        </strong>
+                    </div>
+
+                    <div class="my-detail-row">
+                        <span><i class="bi bi-calendar-event"></i> Booking Date</span>
+                        <strong>{{ booking.booking_date }}</strong>
+                    </div>
+
+                    <div class="my-detail-row">
+                        <span><i class="bi bi-info-circle"></i> Status</span>
+                        <strong>{{ booking.get_status_display }}</strong>
+                    </div>
+
+                </div>
+
+                <a href="{% url 'track_queue' booking.id %}"
+                   class="track-queue-btn">
+                    <i class="bi bi-broadcast"></i>
+                    Track My Queue
+                </a>
+
+                {% if booking.status == 'WAITING' %}
+
+                    <form method="POST"
+                          action="{% url 'cancel_booking' booking.id %}"
+                          class="cancel-booking-form">
+
+                        {% csrf_token %}
+
+                        <button type="submit"
+                                class="cancel-booking-btn">
+                            <i class="bi bi-x-circle"></i>
+                            Cancel Booking
+                        </button>
+
+                    </form>
+
+                {% endif %}
+
+            </div>
+
+        {% empty %}
+
+            <div class="no-bookings">
+
+                <div class="no-bookings-icon">
+                    <i class="bi bi-calendar2-x"></i>
+                </div>
+
+                <h2>No Bookings Yet</h2>
+
+                <p>
+                    You have no bookings currently.
+                    Explore clinics and book your token.
+                </p>
+
+                <a href="{% url 'clinic_list' %}" class="btn">
+                    <i class="bi bi-hospital"></i>
+                    Explore Clinics
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="my-bookings-back">
+        <a href="{% url 'clinic_list' %}">
+            <i class="bi bi-arrow-left"></i>
+            Back to Clinics
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}

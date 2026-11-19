@@ -1,0 +1,127 @@
+
+
+
+{% extends 'base.html' %}
+
+{% block title %}Clinic Details | QueueLess{% endblock %}
+
+{% block content %}
+
+<section class="clinic-detail-section">
+
+    <!-- Clinic Information -->
+
+    <div class="clinic-info-card">
+
+        <div class="clinic-detail-icon">
+            <i class="bi bi-hospital"></i>
+        </div>
+
+        <span class="clinic-detail-tag">
+            <i class="bi bi-patch-check-fill"></i>
+            Clinic Information
+        </span>
+
+        <h1>{{ clinic.clinic_name }}</h1>
+
+        <p class="clinic-location">
+            <i class="bi bi-geo-alt-fill"></i>
+            {{ clinic.address }}
+        </p>
+
+    </div>
+
+
+    <!-- Doctors Section -->
+
+    <div class="doctors-section">
+
+        <div class="doctors-heading">
+
+            <span class="doctors-page-tag">
+                OUR MEDICAL TEAM
+            </span>
+
+            <h2>
+                <i class="bi bi-person-badge"></i>
+                Available Doctors
+            </h2>
+
+            <p>Choose a doctor and book your token.</p>
+
+        </div>
+
+        <div class="doctors-container">
+
+            {% for doctor in doctors %}
+
+                <div class="doctor-card">
+
+                    <div class="doctor-icon">
+                        <i class="bi bi-person-badge-fill"></i>
+                    </div>
+
+                    <h3>
+                        Dr. {{ doctor.user.first_name }}
+                        {{ doctor.user.last_name }}
+                    </h3>
+
+                    <p class="doctor-specialization">
+                        <i class="bi bi-clipboard2-pulse"></i>
+                        <strong>Specialization</strong>
+                        <span>{{ doctor.specialization }}</span>
+                    </p>
+
+                    <p class="doctor-availability">
+                        <span class="availability-dot"></span>
+                        Available
+                    </p>
+
+                    <a href="{% url 'book_token' %}"
+                       class="btn doctor-book-btn">
+
+                        <i class="bi bi-ticket-perforated"></i>
+                        Book Token
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            {% empty %}
+
+                <div class="empty-doctors">
+
+                    <div class="doctor-empty-icon">
+                        <i class="bi bi-person-x"></i>
+                    </div>
+
+                    <h3>No Doctors Available</h3>
+
+                    <p>
+                        No doctors available in this clinic currently.
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Back Button -->
+
+    <div class="back-clinic">
+
+        <a href="{% url 'clinic_list' %}" class="back-btn">
+            <i class="bi bi-arrow-left"></i>
+            Back to Clinics
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,283 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}Doctor Dashboard | QueueLess{% endblock %}
+
+{% block content %}
+
+<section class="doctor-dashboard-section">
+
+    <div class="doctor-dashboard-header">
+
+        <div>
+            <span class="doctor-dashboard-tag">
+                <i class="bi bi-speedometer2"></i> DOCTOR PORTAL
+            </span>
+
+            <h1>Doctor Dashboard</h1>
+
+            <p class="doctor-welcome">
+                Welcome, Dr. {{ doctor.user.first_name }}
+                {{ doctor.user.last_name }}
+            </p>
+
+            <p>
+                <i class="bi bi-hospital"></i>
+                {{ doctor.clinic.clinic_name }}
+            </p>
+
+            <p>
+                <i class="bi bi-calendar-event"></i>
+                {{ today }}
+            </p>
+        </div>
+
+        <div class="doctor-dashboard-header-icon">
+            <i class="bi bi-person-badge"></i>
+        </div>
+
+    </div>
+
+    <!-- MESSAGES -->
+
+    {% if messages %}
+        <div class="dashboard-messages">
+            {% for message in messages %}
+                <p class="{{ message.tags }}">
+                    <i class="bi bi-info-circle"></i>
+                    {{ message }}
+                </p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- DASHBOARD SUMMARY -->
+
+    <div class="dashboard-stats">
+
+        <div class="dashboard-stat-card waiting-stat">
+            <div class="dashboard-stat-icon">
+                <i class="bi bi-people"></i>
+            </div>
+
+            <h2>{{ waiting_count }}</h2>
+            <p>Waiting Patients</p>
+        </div>
+
+        <div class="dashboard-stat-card completed-stat">
+            <div class="dashboard-stat-icon">
+                <i class="bi bi-check-circle"></i>
+            </div>
+
+            <h2>{{ completed_count }}</h2>
+            <p>Completed Patients</p>
+        </div>
+
+        <div class="dashboard-stat-card current-stat">
+            <div class="dashboard-stat-icon">
+                <i class="bi bi-ticket-perforated"></i>
+            </div>
+
+            <h2>
+                {% if current_booking %}
+                    {{ current_booking.token_number }}
+                {% else %}
+                    -
+                {% endif %}
+            </h2>
+
+            <p>Current Token</p>
+        </div>
+
+    </div>
+
+    <!-- CALL NEXT TOKEN -->
+
+    <div class="call-next-section">
+
+        <div>
+            <h2>
+                <i class="bi bi-megaphone"></i>
+                Queue Management
+            </h2>
+
+            <p>Manage your patient queue efficiently.</p>
+        </div>
+
+        <form method="POST" action="{% url 'call_next_token' %}">
+            {% csrf_token %}
+
+            <button type="submit" class="queue-action-btn call-next-btn">
+                <i class="bi bi-arrow-right-circle"></i>
+                Call Next Token
+            </button>
+        </form>
+
+    </div>
+
+    <!-- CURRENT PATIENT -->
+
+    {% if current_booking %}
+
+        <div class="current-patient-card">
+
+            <h2>
+                <i class="bi bi-person-check"></i>
+                Current Patient
+            </h2>
+
+            <div class="current-token-number">
+                Token #{{ current_booking.token_number }}
+            </div>
+
+            <p>
+                <strong>Patient:</strong>
+                {{ current_booking.patient.first_name }}
+                {{ current_booking.patient.last_name }}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                {{ current_booking.get_status_display }}
+            </p>
+
+        </div>
+
+    {% endif %}
+
+    <!-- PATIENT QUEUE -->
+
+    <div class="doctor-queue-section">
+
+        <div class="doctor-queue-title">
+            <h2>
+                <i class="bi bi-list-ul"></i>
+                Today's Patient Queue
+            </h2>
+
+            <p>View and manage today's appointments.</p>
+        </div>
+
+        <div class="doctor-queue-container">
+
+            {% for booking in bookings %}
+
+                <div class="doctor-queue-card">
+
+                    <div class="doctor-queue-header">
+
+                        <h3>
+                            <i class="bi bi-ticket-perforated"></i>
+                            Token #{{ booking.token_number }}
+                        </h3>
+
+                        <span class="doctor-queue-status
+                            {% if booking.status == 'WAITING' %}
+                                waiting
+                            {% elif booking.status == 'CALLED' %}
+                                called
+                            {% elif booking.status == 'IN_PROGRESS' %}
+                                in-progress
+                            {% elif booking.status == 'COMPLETED' %}
+                                completed
+                            {% elif booking.status == 'CANCELLED' %}
+                                cancelled
+                            {% else %}
+                                skipped
+                            {% endif %}
+                        ">
+                            {{ booking.get_status_display }}
+                        </span>
+
+                    </div>
+
+                    <div class="doctor-queue-info">
+
+                        <p>
+                            <i class="bi bi-person"></i>
+                            <strong>Patient:</strong>
+                            {{ booking.patient.first_name }}
+                            {{ booking.patient.last_name }}
+                        </p>
+
+                        <p>
+                            <i class="bi bi-calendar-event"></i>
+                            <strong>Booking Date:</strong>
+                            {{ booking.booking_date }}
+                        </p>
+
+                    </div>
+
+                    <!-- TOKEN ACTIONS -->
+
+                    <div class="token-actions">
+
+                        {% if booking.status == 'CALLED' %}
+
+                            <form method="POST"
+                                  action="{% url 'update_token_status' booking.id 'start' %}">
+                                {% csrf_token %}
+
+                                <button type="submit"
+                                        class="queue-action-btn start-btn">
+                                    <i class="bi bi-play-circle"></i>
+                                    Start Consultation
+                                </button>
+                            </form>
+
+                        {% elif booking.status == 'IN_PROGRESS' %}
+
+                            <form method="POST"
+                                  action="{% url 'update_token_status' booking.id 'complete' %}">
+                                {% csrf_token %}
+
+                                <button type="submit"
+                                        class="queue-action-btn complete-btn">
+                                    <i class="bi bi-check-circle"></i>
+                                    Complete Consultation
+                                </button>
+                            </form>
+
+                        {% elif booking.status == 'WAITING' %}
+
+                            <form method="POST"
+                                  action="{% url 'update_token_status' booking.id 'skip' %}">
+                                {% csrf_token %}
+
+                                <button type="submit"
+                                        class="queue-action-btn skip-btn">
+                                    <i class="bi bi-skip-forward-circle"></i>
+                                    Skip Token
+                                </button>
+                            </form>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <div class="doctor-queue-empty">
+
+                    <div class="doctor-queue-empty-icon">
+                        <i class="bi bi-calendar2-check"></i>
+                    </div>
+
+                    <h3>No Patients Today</h3>
+
+                    <p>No bookings are available for today.</p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

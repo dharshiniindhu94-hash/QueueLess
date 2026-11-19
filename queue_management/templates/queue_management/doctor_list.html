@@ -1,0 +1,83 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Select Doctor | QueueLess{% endblock %}
+
+{% block content %}
+
+<section class="doctor-list-section">
+
+    <div class="doctor-list-header">
+
+        <span class="doctor-page-tag">
+            <i class="bi bi-heart-pulse"></i> OUR MEDICAL TEAM
+        </span>
+
+        <h1>
+            <i class="bi bi-person-badge"></i>
+            Select a Doctor
+        </h1>
+
+        <h2>{{ clinic.clinic_name }}</h2>
+
+        <p>Choose your preferred doctor and book your token easily.</p>
+
+    </div>
+
+    <div class="doctor-list-container">
+
+        {% for doctor in doctors %}
+
+            <div class="doctor-list-card">
+
+                <div class="doctor-profile-icon">
+                    <i class="bi bi-person-circle"></i>
+                </div>
+
+                <h3>
+                    Dr. {{ doctor.user.first_name }}
+                    {{ doctor.user.last_name }}
+                </h3>
+
+                <p class="doctor-speciality">
+                    <i class="bi bi-briefcase-medical"></i>
+                    {{ doctor.specialization }}
+                </p>
+
+                <p class="doctor-available">
+                    <span></span> Available
+                </p>
+
+                <a href="{% url 'book_token' %}"
+                   class="btn doctor-list-btn">
+                    Book Token
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <div class="doctor-list-empty">
+                <div class="doctor-empty-icon">
+                    <i class="bi bi-person-x"></i>
+                </div>
+
+                <h3>No Doctors Available</h3>
+                <p>No doctors available in this clinic currently.</p>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="doctor-list-back">
+        <a href="{% url 'clinic_list' %}">
+            <i class="bi bi-arrow-left"></i>
+            Back to Clinics
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}

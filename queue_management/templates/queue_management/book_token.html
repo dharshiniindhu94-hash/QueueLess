@@ -1,0 +1,108 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}Book Token | QueueLess{% endblock %}
+
+{% block content %}
+
+<section class="booking-section">
+
+    <div class="booking-card">
+
+        <div class="booking-icon">
+            <i class="bi bi-calendar2-check"></i>
+        </div>
+
+        <span class="booking-page-tag">QUICK APPOINTMENT</span>
+
+        <h1>Book Your Token</h1>
+
+        <p class="booking-subtitle">
+            Schedule your clinic appointment easily with QueueLess.
+        </p>
+
+        {% if messages %}
+            <div class="booking-messages">
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">
+                        <i class="bi bi-info-circle"></i>
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="booking-form-group">
+                <label for="clinic">
+                    <i class="bi bi-hospital"></i>
+                    Select Clinic
+                </label>
+
+                <select name="clinic" id="clinic" required>
+                    <option value="">Choose Clinic</option>
+
+                    {% for clinic in clinics %}
+                        <option value="{{ clinic.id }}">
+                            {{ clinic.clinic_name }}
+                        </option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="booking-form-group">
+                <label for="doctor">
+                    <i class="bi bi-person-badge"></i>
+                    Select Doctor
+                </label>
+
+                <select name="doctor" id="doctor" required>
+                    <option value="">Choose Doctor</option>
+
+                    {% for doctor in doctors %}
+                        <option value="{{ doctor.id }}">
+                            Dr. {{ doctor.user.first_name }}
+                            {{ doctor.user.last_name }}
+                            - {{ doctor.specialization }}
+                        </option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="booking-form-group">
+                <label for="booking_date">
+                    <i class="bi bi-calendar-event"></i>
+                    Select Booking Date
+                </label>
+
+                <input type="date"
+                       name="booking_date"
+                       id="booking_date"
+                       min="{{ today }}"
+                       required>
+            </div>
+
+            <button type="submit" class="btn booking-submit-btn">
+                <i class="bi bi-check-circle"></i>
+                Confirm Booking
+            </button>
+
+        </form>
+
+        <div class="booking-back">
+            <a href="{% url 'clinic_list' %}">
+                <i class="bi bi-arrow-left"></i>
+                Back to Clinics
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

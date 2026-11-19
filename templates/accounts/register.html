@@ -1,0 +1,37 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Patient Registration | QueueLess{% endblock %}
+
+{% block content %}
+
+<section class="auth-container">
+
+    <div class="auth-card">
+
+        <h1>Create Account</h1>
+
+        <p class="auth-subtitle">
+            Register to book your clinic tokens
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="btn auth-btn">
+                Register
+            </button>
+        </form>
+
+        <p class="auth-footer">
+            Already have an account?
+            <a href="{% url 'login' %}">Login here</a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

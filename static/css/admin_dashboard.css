@@ -1,0 +1,778 @@
+
+
+/* ==============================
+   GLOBAL STYLING
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f7fc;
+    color: #263248;
+    line-height: 1.6;
+}
+
+a {
+    transition: all 0.25s ease;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* ==============================
+   SIDEBAR
+============================== */
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 30px 20px;
+    border-right: 1px solid #e5eaf2;
+    box-shadow: 2px 0 12px rgba(15, 23, 42, 0.03);
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.sidebar h2 {
+    color: #2563eb;
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 35px;
+}
+
+.sidebar h2 i {
+    margin-right: 8px;
+}
+
+.admin-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #94a3b8;
+    margin-bottom: 15px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-decoration: none;
+    color: #475569;
+    padding: 13px 15px;
+    margin-bottom: 8px;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.sidebar a i {
+    font-size: 18px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #eaf1ff;
+    color: #2563eb;
+}
+
+.sidebar a.active {
+    font-weight: 600;
+}
+
+.sidebar .logout {
+    margin-top: 60px;
+    color: #dc2626;
+}
+
+.sidebar .logout:hover {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+
+/* ==============================
+   MAIN CONTENT
+============================== */
+
+.main-content {
+    margin-left: 250px;
+    padding: 40px;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 35px;
+}
+
+header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+header h1 i {
+    color: #2563eb;
+    margin-right: 8px;
+}
+
+header p {
+    color: #64748b;
+    font-size: 15px;
+}
+
+
+/* ==============================
+   DASHBOARD STATISTICS
+============================== */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid #e5eaf2;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.03);
+    transition: transform 0.25s ease,
+                box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+}
+
+.card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 15px;
+}
+
+.card h3 i {
+    color: #2563eb;
+    font-size: 18px;
+    margin-right: 7px;
+}
+
+.card h2 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+
+/* ==============================
+   MANAGEMENT SECTION
+============================== */
+
+.management-section {
+    background: #ffffff;
+    margin-top: 30px;
+    padding: 30px;
+    border: 1px solid #e5eaf2;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.03);
+}
+
+.management-section h2 {
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #1e293b;
+}
+
+.management-section h2 i {
+    color: #2563eb;
+    margin-right: 8px;
+}
+
+.management-section a {
+    margin-right: 10px;
+    margin-bottom: 8px;
+}
+/* ==============================
+   BUTTONS
+============================== */
+
+.add-button,
+.edit-button,
+.toggle-button,
+.cancel-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.add-button {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.add-button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.edit-button {
+    background: #eaf1ff;
+    color: #2563eb;
+}
+
+.edit-button:hover {
+    background: #dbeafe;
+}
+
+.toggle-button {
+    background: #f1f5f9;
+    color: #334155;
+    margin-left: 5px;
+}
+
+.toggle-button:hover {
+    background: #e2e8f0;
+}
+
+.cancel-button {
+    background: #e5e7eb;
+    color: #334155;
+    margin-left: 8px;
+}
+
+.cancel-button:hover {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+
+/* ==============================
+   TABLE STYLING
+============================== */
+
+.table-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid #e5eaf2;
+    overflow-x: auto;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.03);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+th,
+td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #e5eaf2;
+    font-size: 14px;
+}
+
+th {
+    color: #64748b;
+    background: #f8fafc;
+    font-weight: 600;
+}
+
+td {
+    color: #334155;
+}
+
+tbody tr:hover {
+    background: #f8faff;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* ==============================
+   STATUS BADGES
+============================== */
+
+.status-active {
+    display: inline-block;
+    color: #15803d;
+    background: #dcfce7;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-inactive {
+    display: inline-block;
+    color: #b91c1c;
+    background: #fee2e2;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* Doctor Management Table Improvements */
+
+.status-active,
+.status-inactive {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.clinic-form table td:last-child {
+    white-space: nowrap;
+}
+
+.clinic-form table td:last-child form {
+    display: inline-block;
+}
+
+.clinic-form table td:last-child .edit-button,
+.clinic-form table td:last-child .add-button,
+.clinic-form table td:last-child .cancel-button {
+    margin: 3px;
+    vertical-align: middle;
+}
+
+.clinic-form table td:nth-child(4) {
+    min-width: 140px;
+}
+
+
+/* ==============================
+   FORM PAGE
+============================== */
+
+.form-page {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.form-page h1 {
+    font-size: 27px;
+    color: #1e293b;
+    margin-bottom: 10px;
+}
+
+.form-page > p {
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.clinic-form {
+    background: #ffffff;
+    padding: 30px;
+    border: 1px solid #e5eaf2;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.03);
+    overflow-x: auto;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #ffffff;
+    color: #263248;
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+/* ==============================
+   DOCTOR FORM INPUTS
+============================== */
+
+.clinic-form input,
+.clinic-form select,
+.clinic-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    background: #ffffff;
+    color: #263248;
+    outline: none;
+}
+
+.clinic-form input:focus,
+.clinic-form select:focus,
+.clinic-form textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.clinic-form button.add-button:hover {
+    background: #1d4ed8;
+}
+
+.clinic-form button.cancel-button:hover {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+
+/* ==============================
+   FORM ERRORS
+============================== */
+
+.field-error,
+.form-errors {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+
+/* ==============================
+   RESPONSIVE DESIGN
+============================== */
+
+@media (max-width: 1000px) {
+
+    .main-content {
+        padding: 30px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 20px;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 20px;
+    }
+
+    .sidebar a {
+        padding: 11px 13px;
+    }
+
+    .sidebar .logout {
+        margin-top: 15px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 23px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .card {
+        padding: 22px;
+    }
+
+    .form-page {
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .clinic-form {
+        padding: 18px;
+    }
+
+    .management-section {
+        padding: 20px;
+    }
+}
+
+/* Doctor Status Badge Alignment */
+.clinic-form .status-active,
+.clinic-form .status-inactive {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+
+.clinic-form .status-active i,
+.clinic-form .status-inactive i {
+    display: inline-block;
+    line-height: 1;
+}
+
+/* Doctor Action Buttons */
+.clinic-form table td:last-child {
+    white-space: nowrap;
+}
+
+.clinic-form table td:last-child form {
+    display: inline-flex !important;
+    vertical-align: middle;
+}
+
+.clinic-form table td:last-child a,
+.clinic-form table td:last-child button {
+    padding: 9px 12px;
+    margin: 2px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+/* Doctor Status */
+.doctor-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+
+/* Doctor Actions */
+.doctor-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 220px;
+}
+
+.doctor-actions form {
+    display: inline-flex;
+    margin: 0;
+}
+
+.doctor-actions a,
+.doctor-actions button {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.clinic-form table td:nth-child(5) {
+    min-width: 130px;
+}
+
+.clinic-form table td:nth-child(6) {
+    min-width: 240px;
+}
+
+/* Clinic Management Improvements */
+
+.clinic-add-section {
+    margin-bottom: 25px;
+}
+
+.clinic-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+
+.clinic-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 240px;
+}
+
+.clinic-actions form {
+    display: inline-flex;
+    margin: 0;
+}
+
+.clinic-actions a,
+.clinic-actions button {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.clinic-messages {
+    margin-bottom: 20px;
+}
+
+.clinic-message {
+    background: #dcfce7;
+    color: #15803d;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.clinic-message i {
+    margin-right: 7px;
+}
+
+.empty-message {
+    text-align: center;
+    color: #64748b;
+    padding: 30px;
+}
+/* Clinic Table Alignment Fix */
+
+.table-container table {
+    min-width: 1050px;
+}
+
+.clinic-status {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: max-content;
+    white-space: nowrap;
+}
+
+/* Clinic Action Buttons */
+
+.clinic-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 8px;
+    width: max-content;
+    min-width: 260px;
+}
+
+.clinic-actions form {
+    display: flex;
+    margin: 0;
+}
+
+.clinic-actions a,
+.clinic-actions button {
+    white-space: nowrap;
+    padding: 10px 12px;
+    margin: 0;
+    width: auto;
+}
+
+
+/* Booking Management */
+
+.booking-token {
+    display: inline-block;
+    background: #eff6ff;
+    color: #2563eb;
+    padding: 7px 12px;
+    border-radius: 7px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.table-icon {
+    color: #64748b;
+    margin-right: 6px;
+}
+
+.booking-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-waiting {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.status-called {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status-progress {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
+.status-completed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status-cancelled {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.status-skipped {
+    background: #f1f5f9;
+    color: #475569;
+}

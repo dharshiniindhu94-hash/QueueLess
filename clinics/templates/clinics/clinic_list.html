@@ -1,0 +1,85 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %}Available Clinics | QueueLess{% endblock %}
+
+{% block content %}
+
+<section class="clinic-section">
+
+    <div class="clinic-header">
+
+        <span class="clinic-page-tag">
+            <i class="bi bi-heart-pulse"></i>
+            QUEUELESS HEALTHCARE
+        </span>
+
+        <h1>
+            <i class="bi bi-hospital"></i>
+            Available Clinics
+        </h1>
+
+        <p>
+            Find the right clinic and book your appointment
+            easily with QueueLess.
+        </p>
+
+    </div>
+
+    <div class="clinic-container">
+
+        {% for clinic in clinics %}
+
+            <div class="clinic-card">
+
+                <div class="clinic-icon">
+                    <i class="bi bi-hospital"></i>
+                </div>
+
+                <h2>{{ clinic.name }}</h2>
+
+                <p class="clinic-address">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    {{ clinic.address }}
+                </p>
+
+                <a href="{% url 'clinic_detail' clinic.id %}"
+                   class="btn clinic-btn">
+
+                    View Doctors
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <div class="empty-clinics">
+
+                <div class="clinic-empty-icon">
+                    <i class="bi bi-hospital"></i>
+                </div>
+
+                <h2>No Clinics Available</h2>
+
+                <p>
+                    No clinics available currently.
+                    Please check again later.
+                </p>
+
+                <a href="{% url 'home' %}" class="btn">
+                    <i class="bi bi-house"></i>
+                    Back to Home
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}
